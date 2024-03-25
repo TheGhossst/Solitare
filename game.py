@@ -15,8 +15,13 @@ class SolitaireGUI:
         self.setup_game()
         
     def draw_board(self):
-        pass
+        for i in range(7):
+            x = 20 + i * 100
+            y = 20
+            self.canvas.create_rectangle(x, y, x + self.card_width, y + self.card_height, outline='black', fill='white')
 
+    def setup_game(self):
+        pass
 
 def main():
     root = tk.Tk()
