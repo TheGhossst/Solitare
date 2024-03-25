@@ -16,6 +16,7 @@ class SolitaireGUI:
 
         self.canvas = tk.Canvas(self.master, width=800, height=600, bg='green')
         self.canvas.pack()
+        self.canvas.bind("<Button-1>", self.handle_click)
 
         self.draw_board()
         self.setup_game()
@@ -56,7 +57,27 @@ class SolitaireGUI:
         self.show_top_card('foundation', 0)
         
     def show_top_card(self, pile_type, pile_index=None):
-        pass
+        
+        if pile_type == 'tableau':
+            pile = self.tableau_piles[pile_index]
+        elif pile_type == 'foundation':
+            pile = self.foundation_piles[pile_index]
+        elif pile_type == 'stock':
+            pile = self.stock_pile
+            
+        if pile:
+            card = pile[-1]
+            if pile_type == 'tableau':
+                x = 20 + pile_index * 100
+                y = 20 + (len(pile) - 1) * 20
+            elif pile_type == 'foundation':
+                x = 20 + (pile_index + 2) * 100
+                y = 20
+            elif pile_type == 'stock':
+                x = 20 + 8 * 100
+                y = 20
+            self.draw_card(card, x, y)
+            
                 
     def draw_card(self, card, x, y):
         rank = card['rank']
