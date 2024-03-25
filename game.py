@@ -106,7 +106,48 @@ class SolitaireGUI:
             
             
     def move_card(self, source_pile_type, source_pile_index, dest_pile_type, dest_pile_index):
-         pass
+        if source_pile_type == 'tableau':
+            source_pile = self.tableau_piles[source_pile_index]
+        elif source_pile_type == 'foundation':
+            source_pile = self.foundation_piles[source_pile_index]
+        elif source_pile_type == 'stock':
+            source_pile = self.stock_pile
+
+        if not source_pile:
+            return
+
+        card = source_pile.pop()
+
+        if dest_pile_type is None:
+            if self.can_move_to_foundation(card):
+                for pile_index, pile in enumerate(self.foundation_piles):
+                    if not pile or card['rank'] == 'A' or pile[-1]['rank'] == chr(ord(card['rank']) - 1):
+                        self.foundation_piles[pile_index].append(card)
+                        self.show_top_card('foundation', pile_index)
+                        break
+            elif source_pile_type == 'stock':
+                self.stock_pile = []
+                self.tableau_piles[0].append(card)
+                self.show_top_card('tableau', 0)
+        elif dest_pile_type == 'tableau':
+            dest_pile = self.tableau_piles[dest_pile_index]
+            if not dest_pile or (card['suit'] != dest_pile[-1]['suit'] and ord(card['rank']) == ord(dest_pile[-1]['rank']) - 1):
+                dest_pile.append(card)
+                self.show_top_card('tableau', dest_pile_index)
+
+        self.show_top_card(source_pile_type, source_pile_index)
+        self.check_win_condition()
+
+    def can_move_to_foundation(self, card):
+        for pile in self.foundation_piles:
+            if not pile or (pile and card['rank'] == 'A') or (pile and pile[-1]['rank'] == chr(ord(card['rank']) - 1)):
+                return True
+        return False
+
+    def check_win_condition(self):
+        foundation_complete = all(len(pile) == 13 for pile in self.foundation_piles)
+        if foundation_complete:
+            print("Congratulations! You've won the game!")
     
 def main():
     root = tk.Tk()
