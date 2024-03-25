@@ -57,7 +57,6 @@ class SolitaireGUI:
         self.show_top_card('foundation', 0)
         
     def show_top_card(self, pile_type, pile_index=None):
-        
         if pile_type == 'tableau':
             pile = self.tableau_piles[pile_index]
         elif pile_type == 'foundation':
@@ -86,6 +85,9 @@ class SolitaireGUI:
         self.canvas.create_text(x + 10, y + 10, anchor='nw', text=rank, font=('Helvetica', '14'), fill='red')
         self.canvas.create_text(x + 10, y + 30, anchor='nw', text=suit, font=('Helvetica', '14'), fill='red')
 
+    def handle_click(self, event):
+        pass
+    
 def main():
     root = tk.Tk()
     solitaire_gui = SolitaireGUI(root)
