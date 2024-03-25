@@ -86,7 +86,27 @@ class SolitaireGUI:
         self.canvas.create_text(x + 10, y + 30, anchor='nw', text=suit, font=('Helvetica', '14'), fill='red')
 
     def handle_click(self, event):
-        pass
+        x, y = event.x, event.y
+        for pile_index, pile in enumerate(self.tableau_piles):
+            if pile:
+                card_x = 20 + pile_index * 100
+                card_y = 20 + (len(pile) - 1) * 20
+                if card_x <= x < card_x + self.card_width and card_y <= y < card_y + self.card_height:
+                    self.move_card('tableau', pile_index, None, None)
+                    break
+        for pile_index, pile in enumerate(self.foundation_piles):
+            if pile:
+                card_x = 20 + (pile_index + 2) * 100
+                card_y = 20
+                if card_x <= x < card_x + self.card_width and card_y <= y < card_y + self.card_height:
+                    self.move_card('foundation', pile_index, None, None)
+                    break
+        if 20 + 8 * 100 <= x < 20 + 8 * 100 + self.card_width and 20 <= y < 20 + self.card_height:
+            self.move_card('stock', None, None, None)
+            
+            
+    def move_card(self, source_pile_type, source_pile_index, dest_pile_type, dest_pile_index):
+         pass
     
 def main():
     root = tk.Tk()
