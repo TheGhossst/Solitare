@@ -4,12 +4,16 @@ class SolitaireGUI:
     def __init__(self, master):
         self.master = master
         self.master.title("Solitaire")
+        
+        self.card_width = 71
+        self.card_height = 96
 
         self.canvas = tk.Canvas(self.master, width=800, height=600, bg='green')
         self.canvas.pack()
 
         self.draw_board()
-
+        self.setup_game()
+        
     def draw_board(self):
         pass
 
