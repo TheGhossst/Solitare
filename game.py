@@ -20,6 +20,11 @@ class SolitaireGUI:
             y = 20
             self.canvas.create_rectangle(x, y, x + self.card_width, y + self.card_height, outline='black', fill='white')
 
+        for i in range(4):
+            x = 20 + (i + 2) * 100
+            y = 20
+            self.canvas.create_rectangle(x, y, x + self.card_width, y + self.card_height, outline='black', fill='white')
+    
     def setup_game(self):
         pass
 
